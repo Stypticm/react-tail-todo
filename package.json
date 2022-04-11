@@ -2,7 +2,7 @@
   "name": "react-tail-todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://stypticm.github.io/react-tail-todo",
+  "homepage": "https://Stypticm.github.io/react-tail-todo",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
