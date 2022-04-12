@@ -154,11 +154,7 @@ const App: React.FC = () => {
         <div
           className={`
           ${"border-slate-500 rounded-md"},
-          ${
-            light
-              ? "bg-slate-800 text-slate-400"
-              : "bg-slate-400 text-slate-800"
-          }
+          ${light ? "text-slate-400" : "text-slate-800"}
           `}
         >
           <div className="mt-5">
@@ -170,9 +166,15 @@ const App: React.FC = () => {
               toggleTodo={toggleTodo}
             />
           </div>
-          <div className="flex justify-between text-xs p-4">
+          <div
+            className={`${"flex justify-between text-xs p-4 border-2 border-slate-800 mt-2"}, ${
+              light
+                ? "text-slate-400 bg-slate-800 border-slate-800"
+                : "text-slate-800 bg-slate-400 border-slate-400"
+            }`}
+          >
             <h3>{count} items left</h3>
-            <div>
+            <div className="hidden md:hidden lg:flex">
               <button
                 onClick={(e) => filterTodos(e.currentTarget.textContent)}
                 className="hover:text-blue-500"
@@ -200,6 +202,34 @@ const App: React.FC = () => {
             </button>
           </div>
         </div>
+        <div
+          className={`lg:hidden lg:w-full flex justify-around text-xs mt-5 p-4 border-2 rounded-md, 
+          ${
+            light
+                ? "text-slate-400 bg-slate-800 border-slate-800"
+                : "text-slate-800 bg-slate-400 border-slate-400"
+          }`}
+        >
+          <button
+            onClick={(e) => filterTodos(e.currentTarget.textContent)}
+            className="hover:text-blue-500"
+          >
+            All
+          </button>
+          <button
+            onClick={(e) => filterTodos(e.currentTarget.textContent)}
+            className="px-3 hover:text-blue-500"
+          >
+            Active
+          </button>
+          <button
+            onClick={(e) => filterTodos(e.currentTarget.textContent)}
+            className="hover:text-blue-500"
+          >
+            Completed
+          </button>
+        </div>
+
         <span className="flex justify-center mt-5 text-sm text-slate-500">
           Drag and drop to render list
         </span>

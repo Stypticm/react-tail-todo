@@ -25,15 +25,10 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
     <Reorder.Item value={todo} style={{ listStyle: "none" }}>
       {isVisible ? (
         <li
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-          className={`${"list-none border-b-2 border-slate-300  p-4 text-2xl"}, ${
+          className={`${"flex justify-between content-center border-2 list-none p-4 text-2xl"}, ${
             light
-              ? "text-slate-400 bg-slate-800"
-              : "text-slate-800 bg-slate-400"
+              ? "text-slate-400 bg-slate-800 border-slate-900"
+              : "text-slate-800 bg-slate-400 border-slate-500"
           }`}
         >
           <BsCheck
