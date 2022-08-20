@@ -24,7 +24,8 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
   return (
     <Reorder.Item value={todo} style={{ listStyle: "none" }}>
       {isVisible ? (
-        <li
+        <div
+          key={id}
           className={`${"flex justify-between content-center border-2 list-none p-4 text-2xl"}, ${
             light
               ? "text-slate-400 bg-slate-800 border-slate-900"
@@ -55,7 +56,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
             className="cursor-pointer hover:text-red-600"
             onClick={() => removeTodo(id)}
           />
-        </li>
+        </div>
       ) : (
         ""
       )}

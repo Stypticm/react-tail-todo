@@ -11,6 +11,11 @@ const App: React.FC = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const result = todos.filter((item) => (item.isCompleted))
+    setCount(result.length)
+  }, [todos])
+
   const addTodo = () => {
     if (value) {
       setTodos([
@@ -43,7 +48,7 @@ const App: React.FC = () => {
       todos.map((todo) => {
         if (todo.id !== id) return todo;
 
-        return {
+        return {      
           ...todo,
           isCompleted: !todo.isCompleted,
         };

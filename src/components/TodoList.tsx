@@ -13,6 +13,7 @@ interface ITodoListProps {
 
 const TodoList = (props: ITodoListProps) => {
   const { removeTodo, toggleTodo, light, setTodos, todos } = props;
+
   return (
     <Reorder.Group as="div" axis="y" values={todos} onReorder={setTodos}>
       {props.todos.map((todo) => (
