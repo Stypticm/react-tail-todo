@@ -1,7 +1,13 @@
 import React, { FC } from "react";
+
+// Components
 import TodoItems from "./TodoItems";
-import { ITodo, ITodoListProps } from "src/types/data";
-import { filterTodos } from "src/features/FilterTodos";
+
+// Types
+import { ITodo, ITodoListProps } from "../types/data";
+
+// Features
+import { filterTodos } from "../features/FilterTodos";
 
 const TodosList = (props: ITodoListProps) => {
   const { removeTodo, toggleTodo, light, setTodos, todos, count } =

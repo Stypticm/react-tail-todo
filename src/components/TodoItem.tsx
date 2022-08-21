@@ -1,7 +1,9 @@
 import React from "react";
-import { ITodo } from "src/types/data";
 import { BsCheck, BsTrash } from "react-icons/bs";
 import { Reorder } from "framer-motion";
+
+// Types
+import { ITodo } from "../types/data";
 
 interface ITodoItem extends ITodo {
   todo: ITodo[];

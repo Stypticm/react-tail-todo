@@ -1,5 +1,7 @@
 import React from "react";
-import { filterTodos } from "src/features/FilterTodos";
+
+// Features
+import { filterTodos } from "../features/FilterTodos";
 
 const ButtonsAndText = ({ light, todos, setTodos }) => {
   return (

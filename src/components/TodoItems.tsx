@@ -1,7 +1,11 @@
-import { Reorder } from "framer-motion";
 import React from "react";
-import { ITodo } from "src/types/data";
+import { Reorder } from "framer-motion";
+
+// Components
 import TodoItem from "./TodoItem";
+
+// Types
+import { ITodo } from "../types/data";
 
 interface ITodoListProps {
   todos: ITodo[] | [];
