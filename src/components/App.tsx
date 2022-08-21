@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import TodoList from "./TodoList";
 import { BsFillSunFill } from "react-icons/bs";
+
+// Components
+import TodoItems from "./TodoItems";
+import TodosList from "./TodosList";
+import ButtonsAndText from './ButtonsAndText'
+import InputTodo from "./InputTodo";
+
+// Types
 import { ITodo } from "../types/data";
+
+// Features
+import { filterTodos } from "../features/FilterTodos";
 
 const App: React.FC = () => {
   const [value, setValue] = useState("");
@@ -12,9 +22,9 @@ const App: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const result = todos.filter((item) => (item.isCompleted))
-    setCount(result.length)
-  }, [todos])
+    const result = todos.filter((item) => item.isCompleted);
+    setCount(result.length);
+  }, [todos]);
 
   const addTodo = () => {
     if (value) {
@@ -48,69 +58,12 @@ const App: React.FC = () => {
       todos.map((todo) => {
         if (todo.id !== id) return todo;
 
-        return {      
+        return {
           ...todo,
           isCompleted: !todo.isCompleted,
         };
       })
     );
-  };
-
-  const filterTodos = (group: string): void => {
-    const initial = [...todos];
-
-    const all = initial.map((todo) => {
-      return {
-        ...todo,
-        isVisible: true,
-      };
-    });
-
-    const active = initial.map((todo) => {
-      if (!todo.isCompleted) {
-        return {
-          ...todo,
-          isVisible: true,
-        };
-      }
-
-      return {
-        ...todo,
-        isVisible: false,
-      };
-    });
-
-    const completed = initial.map((todo) => {
-      if (todo.isCompleted)
-        return {
-          ...todo,
-          isVisible: true,
-        };
-
-      return {
-        ...todo,
-        isVisible: false,
-      };
-    });
-
-    const clearCompleted = initial.filter((todo) => !todo.isCompleted);
-
-    switch (group) {
-      case "All":
-        setTodos(all);
-        break;
-      case "Active":
-        setTodos(active);
-        break;
-      case "Completed":
-        setTodos(completed);
-        break;
-      case "Clear completed":
-        setTodos(clearCompleted);
-        break;
-      default:
-        break;
-    }
   };
 
   useEffect(() => {
@@ -143,101 +96,21 @@ const App: React.FC = () => {
             onClick={() => setLight(!light)}
           />
         </div>
-        <div className="w-full">
-          <div className="flex justify-center">
-            <input
-              type="text"
-              value={value}
-              onChange={handleChange}
-              placeholder="Create a new todo..."
-              className="w-screen bg-slate-800 text-slate-400 p-5"
-              onKeyPress={handleKeyDown}
-              ref={inputRef}
-            />
-          </div>
-        </div>
-        <div
-          className={`
-          ${"border-slate-500 rounded-md"},
-          ${light ? "text-slate-400" : "text-slate-800"}
-          `}
-        >
-          <div className="mt-5">
-            <TodoList
-              light={light}
-              todos={todos}
-              setTodos={setTodos}
-              removeTodo={removeTodo}
-              toggleTodo={toggleTodo}
-            />
-          </div>
-          <div
-            className={`${"flex justify-between text-xs p-4 border-2 border-slate-800 mt-2"}, ${
-              light
-                ? "text-slate-400 bg-slate-800 border-slate-800"
-                : "text-slate-800 bg-slate-400 border-slate-400"
-            }`}
-          >
-            <h3>{count} items left</h3>
-            <div className="hidden md:hidden lg:flex">
-              <button
-                onClick={(e) => filterTodos(e.currentTarget.textContent)}
-                className="hover:text-blue-500"
-              >
-                All
-              </button>
-              <button
-                onClick={(e) => filterTodos(e.currentTarget.textContent)}
-                className="px-3 hover:text-blue-500"
-              >
-                Active
-              </button>
-              <button
-                onClick={(e) => filterTodos(e.currentTarget.textContent)}
-                className="hover:text-blue-500"
-              >
-                Completed
-              </button>
-            </div>
-            <button
-              onClick={(e) => filterTodos(e.currentTarget.textContent)}
-              className="hover:text-blue-500"
-            >
-              Clear completed
-            </button>
-          </div>
-        </div>
-        <div
-          className={`lg:hidden lg:w-full flex justify-around text-xs mt-5 p-4 border-2 rounded-md, 
-          ${
-            light
-                ? "text-slate-400 bg-slate-800 border-slate-800"
-                : "text-slate-800 bg-slate-400 border-slate-400"
-          }`}
-        >
-          <button
-            onClick={(e) => filterTodos(e.currentTarget.textContent)}
-            className="hover:text-blue-500"
-          >
-            All
-          </button>
-          <button
-            onClick={(e) => filterTodos(e.currentTarget.textContent)}
-            className="px-3 hover:text-blue-500"
-          >
-            Active
-          </button>
-          <button
-            onClick={(e) => filterTodos(e.currentTarget.textContent)}
-            className="hover:text-blue-500"
-          >
-            Completed
-          </button>
-        </div>
-
-        <span className="flex justify-center mt-5 text-sm text-slate-500">
-          Drag and drop to render list
-        </span>
+        <InputTodo
+          value={value}
+          handleChange={handleChange}
+          handleKeyDown={handleKeyDown}
+          inputRef={inputRef}
+        />
+        <TodosList
+          light={light}
+          count={count}
+          todos={todos}
+          setTodos={setTodos}
+          removeTodo={removeTodo}
+          toggleTodo={toggleTodo}
+        />
+        <ButtonsAndText light={light} todos={todos} setTodos={setTodos}/>
       </div>
     </div>
   );

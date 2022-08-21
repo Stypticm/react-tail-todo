@@ -11,7 +11,7 @@ interface ITodoListProps {
   toggleTodo: (id: number) => void;
 }
 
-const TodoList = (props: ITodoListProps) => {
+const TodoItems = (props: ITodoListProps) => {
   const { removeTodo, toggleTodo, light, setTodos, todos } = props;
 
   return (
@@ -31,4 +31,4 @@ const TodoList = (props: ITodoListProps) => {
   );
 };
 
-export default TodoList;
+export default TodoItems;
