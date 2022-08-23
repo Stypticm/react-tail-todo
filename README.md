@@ -4,3 +4,4 @@
 ### `TypeScript`
 ### `Tailwindcss`
 ### `FramerMotion`
+### `Redux`
