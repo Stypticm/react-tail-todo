@@ -2,29 +2,31 @@ import React from "react";
 import { BsCheck, BsTrash } from "react-icons/bs";
 import { Reorder } from "framer-motion";
 
-// Types
-import { ITodo } from "../types/data";
+// Redux
+import { removeTodo, toggleTodo } from "../store/todoSlice";
+import { useAppDispatch, useAppSelector } from "../hook";
+import { RootState } from "../store";
 
-interface ITodoItem extends ITodo {
-  todo: ITodo[];
+interface TodoItemProps {
+  id: number;
+  title: string;
+  isCompleted: boolean;
+  isVisible: boolean;
   light: boolean;
-  removeTodo: (id: number) => void;
-  toggleTodo: (id: number) => void;
 }
 
-const TodoItem: React.FC<ITodoItem> = (props) => {
-  const {
-    id,
-    title,
-    isCompleted,
-    isVisible,
-    light,
-    removeTodo,
-    toggleTodo,
-    todo,
-  } = props;
+const TodoItem: React.FC<TodoItemProps> = ({
+  id,
+  title,
+  isCompleted,
+  isVisible,
+  light,
+}) => {
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state: RootState) => state.todos.list);
+
   return (
-    <Reorder.Item value={todo} style={{ listStyle: "none" }}>
+    <Reorder.Item value={todos} style={{ listStyle: "none" }}>
       {isVisible ? (
         <div
           key={id}
@@ -48,7 +50,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
                   : "text-slate-400 bg-slate-400"
               }
             `}
-            onClick={() => toggleTodo(id)}
+            onClick={() => dispatch(toggleTodo(id))}
           />
           <span className={isCompleted ? "line-through text-slate-600" : ""}>
             {title}
@@ -56,7 +58,7 @@ const TodoItem: React.FC<ITodoItem> = (props) => {
           <BsTrash
             size={24}
             className="cursor-pointer hover:text-red-600"
-            onClick={() => removeTodo(id)}
+            onClick={() => dispatch(removeTodo(id))}
           />
         </div>
       ) : (

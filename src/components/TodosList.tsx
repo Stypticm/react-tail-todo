@@ -1,17 +1,21 @@
-import React, { FC } from "react";
+import React  from "react";
+import { useAppDispatch, useAppSelector } from "../hook";
 
 // Components
 import TodoItems from "./TodoItems";
 
+//Redux
+import { filterClearCompleted } from "../store/filterTodosSlice";
+
 // Types
-import { ITodo, ITodoListProps } from "../types/data";
+import { ITodoListProps } from "../types/data";
 
 // Features
-import { filterTodos } from "../features/FilterTodos";
+import { RootState } from "../store";
 
-const TodosList = (props: ITodoListProps) => {
-  const { removeTodo, toggleTodo, light, setTodos, todos, count } =
-    props;
+const TodosList: React.FC<ITodoListProps> = ({ light, count }) => {
+  const todos = useAppSelector((state: RootState) => state.todos.list);
+  const dispatch = useAppDispatch();
 
   return (
     <div
@@ -21,13 +25,7 @@ const TodosList = (props: ITodoListProps) => {
           `}
     >
       <div className="mt-5">
-        <TodoItems
-          light={light}
-          todos={todos}
-          setTodos={setTodos}
-          removeTodo={removeTodo}
-          toggleTodo={toggleTodo}
-        />
+        <TodoItems light={light} count={count} />
       </div>
       <div
         className={`${"flex justify-between text-xs p-4 border-2 border-slate-800 mt-2"}, ${
@@ -37,36 +35,9 @@ const TodosList = (props: ITodoListProps) => {
         }`}
       >
         <h3>{count} items left</h3>
-        <div className="hidden md:hidden lg:flex">
-          <button
-            onClick={(e) =>
-              filterTodos(e.currentTarget.textContent, todos, setTodos)
-            }
-            className="hover:text-blue-500"
-          >
-            All
-          </button>
-          <button
-            onClick={(e) =>
-              filterTodos(e.currentTarget.textContent, todos, setTodos)
-            }
-            className="px-3 hover:text-blue-500"
-          >
-            Active
-          </button>
-          <button
-            onClick={(e) =>
-              filterTodos(e.currentTarget.textContent, todos, setTodos)
-            }
-            className="hover:text-blue-500"
-          >
-            Completed
-          </button>
-        </div>
+        <div className="hidden md:hidden lg:flex"></div>
         <button
-          onClick={(e) =>
-            filterTodos(e.currentTarget.textContent, todos, setTodos)
-          }
+          onClick={(e) => dispatch(filterClearCompleted(todos))}
           className="hover:text-blue-500"
         >
           Clear completed

@@ -4,68 +4,45 @@ import { BsFillSunFill } from "react-icons/bs";
 // Components
 import TodoItems from "./TodoItems";
 import TodosList from "./TodosList";
-import ButtonsAndText from './ButtonsAndText'
+import ButtonsAndFooter from './ButtonsAndFooter'
 import InputTodo from "./InputTodo";
 
 // Types
-import { ITodo } from "../types/data";
+import { ITodoListProps } from "../types/data";
 
 // Features
-import { filterTodos } from "../features/FilterTodos";
+import { useAppDispatch, useAppSelector } from "../hook";
+import { RootState } from "../store";
+import { addTodo } from "../store/todoSlice";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState("");
-  const [todos, setTodos] = useState<ITodo[]>([]);
   const [count, setCount] = useState(0);
   const [light, setLight] = useState(true);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const todos = useAppSelector((state: RootState) => state.todos.list)
+
+  const addTask = () => {
+    dispatch(addTodo(value))
+    setValue("")
+  }
 
   useEffect(() => {
     const result = todos.filter((item) => item.isCompleted);
     setCount(result.length);
   }, [todos]);
 
-  const addTodo = () => {
-    if (value) {
-      setTodos([
-        ...todos,
-        {
-          id: Date.now(),
-          title: value,
-          isCompleted: false,
-          isVisible: true,
-        },
-      ]);
-      setValue("");
-    }
-  };
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    e.key === "Enter" && addTodo();
+    e.key === "Enter" && addTask();
   };
-
-  const removeTodo = (id: number): void => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const toggleTodo = (id: number): void => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id !== id) return todo;
-
-        return {
-          ...todo,
-          isCompleted: !todo.isCompleted,
-        };
-      })
-    );
-  };
-
+  
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
@@ -105,12 +82,8 @@ const App: React.FC = () => {
         <TodosList
           light={light}
           count={count}
-          todos={todos}
-          setTodos={setTodos}
-          removeTodo={removeTodo}
-          toggleTodo={toggleTodo}
         />
-        <ButtonsAndText light={light} todos={todos} setTodos={setTodos}/>
+        <ButtonsAndFooter light={light} />
       </div>
     </div>
   );

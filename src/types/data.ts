@@ -6,10 +6,6 @@ export interface ITodo {
 }
 
 export interface ITodoListProps {
-  todos: ITodo[] | [];
-  setTodos: (todos: ITodo[]) => void;
   light: boolean;
-  removeTodo: (id: number) => void;
-  toggleTodo: (id: number) => void;
   count: number;
 }

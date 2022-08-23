@@ -1,9 +1,22 @@
 import React from "react";
+import {
+  filterTodosAll,
+  filterTodosCompleted,
+  filterTodosActive
+} from "../store/filterTodosSlice";
+
+// import {
+//   filterTodosActive
+// } from '../store/todoSlice'
 
 // Features
-import { filterTodos } from "../features/FilterTodos";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
 
-const ButtonsAndText = ({ light, todos, setTodos }) => {
+const ButtonsAndFooter = ({ light }) => {
+  const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todos.list);
+
   return (
     <>
       <div
@@ -15,25 +28,21 @@ const ButtonsAndText = ({ light, todos, setTodos }) => {
           }`}
       >
         <button
-          onClick={(e) =>
-            filterTodos(e.currentTarget.textContent, todos, setTodos)
-          }
+          onClick={(e) => {
+            dispatch(filterTodosAll(todos));
+          }}
           className="hover:text-blue-500"
         >
           All
         </button>
         <button
-          onClick={(e) =>
-            filterTodos(e.currentTarget.textContent, todos, setTodos)
-          }
+          onClick={(e) => dispatch(filterTodosActive(todos))}
           className="px-3 hover:text-blue-500"
         >
           Active
         </button>
         <button
-          onClick={(e) =>
-            filterTodos(e.currentTarget.textContent, todos, setTodos)
-          }
+          onClick={(e) => dispatch(filterTodosCompleted(todos))}
           className="hover:text-blue-500"
         >
           Completed
@@ -47,4 +56,4 @@ const ButtonsAndText = ({ light, todos, setTodos }) => {
   );
 };
 
-export default ButtonsAndText;
+export default ButtonsAndFooter;

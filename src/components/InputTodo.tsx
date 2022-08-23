@@ -1,6 +1,13 @@
 import React from 'react'
 
-const InputTodo = ({ value, handleChange, handleKeyDown, inputRef }) => {
+interface NewTodoFormProps {
+  value: string,
+  handleChange: React.ChangeEventHandler<HTMLInputElement>, 
+  handleKeyDown: React.KeyboardEventHandler<HTMLInputElement>, 
+  inputRef: React.MutableRefObject<HTMLInputElement>
+}
+
+const InputTodo: React.FC<NewTodoFormProps> = ({ value, handleChange, handleKeyDown, inputRef }) => {
   return (
     <div className="w-full">
           <div className="flex justify-center">
