@@ -1,21 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   filterTodosAll,
+  filterTodosActive,
   filterTodosCompleted,
-  filterTodosActive
 } from "../store/filterTodosSlice";
 
-// import {
-//   filterTodosActive
-// } from '../store/todoSlice'
 
 // Features
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useAppDispatch, useAppSelector } from "../hook";
 
 const ButtonsAndFooter = ({ light }) => {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: RootState) => state.todos.list);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state: RootState) => state.todos.list);
 
   return (
     <>
@@ -29,7 +26,7 @@ const ButtonsAndFooter = ({ light }) => {
       >
         <button
           onClick={(e) => {
-            dispatch(filterTodosAll(todos));
+            dispatch(filterTodosAll(todos))
           }}
           className="hover:text-blue-500"
         >

@@ -12,8 +12,11 @@ import { ITodoListProps } from "../types/data";
 
 // Features
 import { useAppDispatch, useAppSelector } from "../hook";
-import { RootState } from "../store";
+import store, { RootState } from "../store";
 import { addTodo } from "../store/todoSlice";
+import { filterTodosAll } from "src/store/filterTodosSlice";
+import { incrementPlus } from "src/store/increment";
+import { decrementMinus } from "src/store/decrement";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +27,7 @@ const App: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const todos = useAppSelector((state: RootState) => state.todos.list)
+  const counter = useAppSelector((state: RootState) => state.increment.counter)
 
   const addTask = () => {
     dispatch(addTodo(value))
@@ -64,6 +68,9 @@ const App: React.FC = () => {
               }
             `}
           >
+            <button onClick={() => dispatch(incrementPlus())}>+</button>
+              {counter}
+            <button onClick={() => dispatch(decrementMinus())}>-</button>
             TODO
           </h1>
           <BsFillSunFill

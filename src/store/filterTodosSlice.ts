@@ -1,30 +1,56 @@
+import { todoSlice } from "./todoSlice";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import store from ".";
 
-const filterTodosSlice = createSlice({
+type Todo = {
+  id: number;
+  title: string;
+  isCompleted: boolean;
+  isVisible: boolean;
+};
+
+type TodosState = {
+  list: Todo[];
+};
+
+const initialState: TodosState = {
+  list: [],
+};
+
+export const filterTodosSlice = createSlice({
   name: "filters",
-  initialState: {
-    todos: [],
-  },
+  initialState,
   reducers: {
     filterTodosAll(state, action) {
+      state.list = action.payload;
     },
     filterTodosActive(state, action) {
-      console.log(state.todos)
+      state.list = action.payload.map((todo) => {
+        if (!todo.isCompleted) {
+          return {
+            ...todo,
+            isVisible: true,
+          };
+        }
+
+        return {
+          ...todo,
+          isVisible: false,
+        };
+      });
     },
-    filterTodosCompleted(state, action) {
-      console.log("Completed");
-    },
+    filterTodosCompleted(state, action) {},
     filterClearCompleted(state, action) {
-      console.log("Clear completed");
+      state.list = state.list.filter((todo) => !todo.isCompleted);
     },
   },
 });
 
 export const {
   filterTodosAll,
-  filterTodosActive,
   filterTodosCompleted,
   filterClearCompleted,
+  filterTodosActive,
 } = filterTodosSlice.actions;
 
-export default filterTodosSlice.reducer;
+export const filterReducer = filterTodosSlice.reducer;
