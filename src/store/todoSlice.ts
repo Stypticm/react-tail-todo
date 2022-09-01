@@ -35,9 +35,58 @@ export const todoSlice = createSlice({
       if (toggleTodo) {
         toggleTodo.isCompleted = !toggleTodo.isCompleted;
       }
-    }
-  }
+    },
+    filterTodosAll(state, action) {
+      state.list = action.payload.map((todo) => {
+        return {
+          ...todo,
+          isVisible: true
+        }
+      })
+    },
+    filterTodosActive(state, action) {
+      state.list = action.payload.map((todo) => {
+        if (!todo.isCompleted) {
+          return {
+            ...todo,
+            isVisible: true,
+          };
+        }
+
+        return {
+          ...todo,
+          isVisible: false,
+        };
+      });
+    },
+    filterTodosCompleted(state, action) {
+      state.list = action.payload.map((todo) => {
+        if (todo.isCompleted) {
+          return {
+            ...todo,
+            isVisible: true,
+          };
+        }
+
+        return {
+          ...todo,
+          isVisible: false
+        };
+      });
+    },
+    filterClearCompleted(state, action) {
+      state.list = state.list.filter((todo) => !todo.isCompleted);
+    },
+  },
 });
 
-export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  toggleTodo,
+  filterTodosAll,
+  filterTodosCompleted,
+  filterClearCompleted,
+  filterTodosActive,
+} = todoSlice.actions;
 export const todoReducer = todoSlice.reducer;

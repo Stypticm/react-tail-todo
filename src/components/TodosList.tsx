@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hook";
 import TodoItems from "./TodoItems";
 
 //Redux
-import { filterClearCompleted } from "../store/filterTodosSlice";
+import { filterClearCompleted } from "../store/todoSlice";
 
 // Types
 import { ITodoListProps } from "../types/data";

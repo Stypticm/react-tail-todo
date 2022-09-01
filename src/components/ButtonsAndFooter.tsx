@@ -3,7 +3,7 @@ import {
   filterTodosAll,
   filterTodosActive,
   filterTodosCompleted,
-} from "../store/filterTodosSlice";
+} from "../store/todoSlice";
 
 
 // Features
